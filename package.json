@@ -26,6 +26,10 @@
     "@chrisoakman/chessboardjs": "^1.0.0",
     "chess.js": "^1.4.0",
     "express": "^5.2.1",
-    "jquery": "^4.0.0"
+    "jquery": "^4.0.0",
+    "stockfish": "^19.0.0"
+  },
+  "allowScripts": {
+    "stockfish@19.0.0": true
   }
 }

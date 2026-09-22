@@ -13,6 +13,7 @@ app.use(express.static('public'));
 app.use('/vendor/chessboard', express.static(path.join(__dirname, 'node_modules/@chrisoakman/chessboardjs/dist')));
 app.use('/vendor/chess', express.static(path.join(__dirname, 'node_modules/chess.js/dist/esm')));
 app.use('/vendor/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
+app.use('/vendor/stockfish', express.static(path.join(__dirname, 'node_modules/stockfish/bin')));
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
