@@ -1,64 +1,49 @@
 import { Chess } from '/vendor/chess/chess.js';
 
-const game = new Chess();
-const stockfish = new Worker('vendor/stockfish/stockfish-19-lite-single.js');
-let board = null;
+const stockfish1 = new Worker('vendor/stockfish/stockfish-19-lite-single.js');
+const stockfish2 = new Worker('vendor/stockfish/stockfish-19-lite-single.js');
 
-function onDragStart (source, piece, position, orientation) {
-  if (game.isGameOver()) return false;
+let game = new Chess();
+let currentEngineIndex = 0;
 
-  if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-      (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-    return false;
-  }
-}
+const board = new Chessboard('myBoard', {
+  draggable: false,
+  position: 'start'
+});
 
-function onDrop (source, target) {
-  try {
-    const move = game.move({
-      from: source,
-      to: target,
-      promotion: 'q'
-    });
-
-    board.position(game.fen());
-
-    if (!game.isGameOver()) {
-      stockfish.postMessage('position fen ' + game.fen());
-      stockfish.postMessage('go depth 10');
-    }
-
-  } catch (error) {
-    return 'snapback';
-  }
-}
-
-function onSnapEnd () {
-  board.position(game.fen());
-}
-
-const config = {
-  draggable: true,
-  position: 'start',
-  pieceTheme: '/img/chesspieces/wikipedia/{piece}.png',
-  onDragStart: onDragStart,
-  onDrop: onDrop,
-  onSnapEnd: onSnapEnd
-};
-
-board = Chessboard('myBoard', config);
-
-stockfish.onmessage = function(event) {
+function handleBestMove(event) {
   const message = event.data;
   if (message.startsWith('bestmove')) {
     const moveString = message.split(' ')[1];
     if (moveString) {
-      const source = moveString.slice(0, 2);
-      const target = moveString.slice(2, 4);
-      const promotion = moveString.slice(4, 5) || 'q';
+      try {
+        const from = moveString.slice(0, 2);
+        const to = moveString.slice(2, 4);
+        const promotion = moveString.slice(4, 5) || 'q';
 
-      game.move({ from: source, to: target, promotion: promotion });
-      board.position(game.fen());
+        const move = game.move({ from, to, promotion });
+        if (move) {
+          board.position(game.fen());
+
+          if (game.isGameOver()) {
+            return;
+          }
+
+          currentEngineIndex = (currentEngineIndex + 1) % 2;
+          const nextWorker = currentEngineIndex === 0 ? stockfish1 : stockfish2;
+
+          nextWorker.postMessage(`position fen ${game.fen()}`);
+          nextWorker.postMessage(`go depth 10`);
+        }
+      } catch (e) {
+        console.error('Move error:', e);
+      }
     }
   }
-};
+}
+
+stockfish1.onmessage = handleBestMove;
+stockfish2.onmessage = handleBestMove;
+
+stockfish1.postMessage(`position fen ${game.fen()}`);
+stockfish1.postMessage(`go depth 10`);
