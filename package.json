@@ -1,0 +1,31 @@
+{
+  "name": "arbiter",
+  "version": "0.1.0",
+  "description": "A proof-of-work web challenger that forces robots to play chess.",
+  "keywords": [
+    "chess",
+    "proof-of-work",
+    "express"
+  ],
+  "homepage": "https://github.com/ZombieNW/Arbiter#readme",
+  "bugs": {
+    "url": "https://github.com/ZombieNW/Arbiter/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZombieNW/Arbiter.git"
+  },
+  "license": "MIT",
+  "author": "ZombieNW",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@chrisoakman/chessboardjs": "^1.0.0",
+    "chess.js": "^1.4.0",
+    "express": "^5.2.1",
+    "jquery": "^4.0.0"
+  }
+}
