@@ -45,5 +45,12 @@ function handleBestMove(event) {
 stockfish1.onmessage = handleBestMove;
 stockfish2.onmessage = handleBestMove;
 
+
+const stock1Difficulty = Math.ceil(Math.random() * 20);
+const stock2Difficulty = Math.ceil(Math.random() * 20);
+
+stockfish1.postMessage(`setoption name Skill Level value ${stock1Difficulty}`);
+stockfish2.postMessage(`setoption name Skill Level value ${stock2Difficulty}`);
+
 stockfish1.postMessage(`position fen ${game.fen()}`);
 stockfish1.postMessage(`go depth 10`);
