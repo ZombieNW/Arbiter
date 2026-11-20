@@ -1,0 +1,31 @@
+{
+  "name": "arbiter",
+  "version": "0.1.0",
+  "description": "An express.js middleware that requires the client and server to play chess before continuing.",
+  "keywords": [
+    "middleware",
+    "express",
+    "chess"
+  ],
+  "homepage": "https://github.com/ZombieNW/Arbiter#readme",
+  "bugs": {
+    "url": "https://github.com/ZombieNW/Arbiter/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZombieNW/Arbiter.git"
+  },
+  "license": "MIT",
+  "author": "ZombieNW",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.6",
+    "tsup": "^9.0.0",
+    "typescript": "^7.0.2"
+  }
+}

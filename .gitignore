@@ -1,0 +1,63 @@
+# Dependencies
+node_modules/
+jspm_packages/
+bower_components/
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build and distribution outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+.svelte-kit/
+.vite/
+.turbo/
+*.tsbuildinfo
+
+# Caches and temporary files
+.npm
+.eslintcache
+.stylelintcache
+.cache/
+.parcel-cache/
+.temp/
+.node_repl_history
+
+# Test coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# OS and Editor files (optional, often placed in global gitignore)
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
