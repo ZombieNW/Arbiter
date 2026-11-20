@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction, RequestHandler } from 'express';
 
 export function arbiterMiddleware(): RequestHandler {
   return (req: Request, res: Response, next: NextFunction): void => {
-    if (req.cookies.passedArbiter === "true") {
+    if (req.cookies?.passedArbiter === "true") {
       return next();
     }
 
@@ -23,8 +23,6 @@ export function arbiterMiddleware(): RequestHandler {
         </body>
       </html>
     `);
-
-    next();
   };
 }
 
