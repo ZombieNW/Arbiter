@@ -1,20 +1,28 @@
 import type { Request, Response, NextFunction, RequestHandler } from 'express';
 
-export interface MiddlewareOptions {
-  headerName?: string;
-  enabled?: boolean;
-}
-
-export function arbiterMiddleware(options: MiddlewareOptions = {}): RequestHandler {
-  const { headerName = 'X-Arbiter-Header', enabled = true } = options;
-
+export function arbiterMiddleware(): RequestHandler {
   return (req: Request, res: Response, next: NextFunction): void => {
-    if (!enabled) {
+    if (req.cookies.passedArbiter === "true") {
       return next();
     }
 
-    // logic goes here
-    res.setHeader(headerName, 'active');
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+        <body>
+          <h1>Before you continue</h1>
+          <p>Please accept our terms to view <strong>${req.originalUrl}</strong>.</p>
+          <button onclick="acceptAndContinue()">I Accept</button>
+
+          <script>
+            function acceptAndContinue() {
+              document.cookie = "passedArbiter=true; path=/; max-age=3600";
+              window.location.reload();
+            }
+          </script>
+        </body>
+      </html>
+    `);
 
     next();
   };
